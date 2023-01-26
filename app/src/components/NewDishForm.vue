@@ -5,15 +5,23 @@ import type { Dish } from '@/types';
 
   const emits = defineEmits<{
     (e: 'add-new-dish', dish: Dish): void,
-    (e: 'cancel-new-dish', dish: Dish): void
+    (e: 'cancel-new-dish'): void
   }>()
   
-  const newDish = ref({
+  const newDish = ref<Dish>({
       id: uuidv4(),
       name: '',
       status: 'Want to Try',
       diet: '',
    })
+
+   const addDish = () => {
+    emits('add-new-dish', newDish.value)
+   }
+
+   const cancelNewDish = () => {
+    emits('cancel-new-dish')
+   }
   
 </script>
 
@@ -35,8 +43,8 @@ import type { Dish } from '@/types';
       </div>
       <div class="field">
         <div class="buttons">
-          <button @click="$emit('add-new-dish', newDish)" class="button is-success">Create</button>
-          <button @click="$emit('cancel-new-dish')" class="button is-light">Cancel</button>
+          <button @click="addDish" class="button is-success">Create</button>
+          <button @click="cancelNewDish" class="button is-light">Cancel</button>
         </div>
       </div>
     </div>
