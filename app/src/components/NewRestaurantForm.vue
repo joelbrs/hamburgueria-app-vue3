@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Restaurant } from '@/types'
 import { v4 as uuidv4 } from 'uuid'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { restaurantStatusList } from '@/constants';
 
     const newRestaurant = ref<Restaurant>({
@@ -12,6 +12,8 @@ import { restaurantStatusList } from '@/constants';
       status: 'Want to Try',
     })
 
+    const elNameInput = ref<HTMLInputElement | null>(null)
+    
     const emits = defineEmits<{
       (e: 'add-new-restaurant', restaurant: Restaurant): void,
       (e: 'cancel-new-restaurant'): void
@@ -24,6 +26,10 @@ import { restaurantStatusList } from '@/constants';
     const cancelRestaurant = () => {
       emits('cancel-new-restaurant')
     }
+
+    onMounted(() => {
+      elNameInput.value?.focus()
+    })
 
 </script>
 
